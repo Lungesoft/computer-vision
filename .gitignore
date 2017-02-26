@@ -1,5 +1,6 @@
 *.class
 
+
 # Package Files #
 *.jar
 *.war
@@ -10,4 +11,6 @@
 /.idea
 
 
+
 hs_err_pid*
+
