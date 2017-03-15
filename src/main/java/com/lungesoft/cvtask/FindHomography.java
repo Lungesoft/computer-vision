@@ -21,8 +21,8 @@ public class FindHomography {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         System.out.println("run searching");
 
-        Mat imgObject = Imgcodecs.imread("inputThree.jpg");
-        Mat imgScene = Imgcodecs.imread("Output.jpg");
+        Mat imgObject = Imgcodecs.imread("object.jpg", 0);
+        Mat imgScene = Imgcodecs.imread("scene.jpg", 0);
 
         FeatureDetector detector = FeatureDetector.create(FeatureDetector.ORB);
 
@@ -62,7 +62,7 @@ public class FindHomography {
         MatOfDMatch gm = new MatOfDMatch();
 
         for (int i = 0; i < descriptorObject.rows(); i++) {
-            if (matchesList.get(i).distance < 3 * minDist) {
+            if (matchesList.get(i).distance < minDist * 4) {
                 goodMatches.addLast(matchesList.get(i));
             }
         }
@@ -99,7 +99,7 @@ public class FindHomography {
         MatOfPoint2f scene = new MatOfPoint2f();
         scene.fromList(sceneList);
 
-        Mat h = Calib3d.findHomography(obj, scene);
+        Mat h = Calib3d.findHomography(obj, scene, 8, 10);
 
         Mat objCorners = new Mat(4, 1, CvType.CV_32FC2);
         Mat sceneCorners = new Mat(4, 1, CvType.CV_32FC2);
@@ -115,14 +115,17 @@ public class FindHomography {
 //        Imgproc.line(imgMatches, new Point(), new Point(), new Scalar(0,255,0), 4);
 //        Imgproc.line(imgMatches, new Point(), new Point(), new Scalar(0,255,0), 4);
 //        Imgproc.line(imgMatches, new Point(), new Point(), new Scalar(0,255,0), 4);
-//
-//        Imgproc.line(imgMatches, new Point(sceneCorners.get(0,0)), new Point(sceneCorners.get(1,0)), new Scalar(0, 255, 0),4);
-//        Imgproc.line(imgMatches, new Point(sceneCorners.get(1,0)), new Point(sceneCorners.get(2,0)), new Scalar(0, 255, 0),4);
-//        Imgproc.line(imgMatches, new Point(sceneCorners.get(2,0)), new Point(sceneCorners.get(3,0)), new Scalar(0, 255, 0),4);
-//        Imgproc.line(imgMatches, new Point(sceneCorners.get(3,0)), new Point(sceneCorners.get(0,0)), new Scalar(0, 255, 0),4);
+
+        Mat img = Imgcodecs.imread("scene.jpg");
+
+        Imgproc.line(img, new Point(sceneCorners.get(0,0)), new Point(sceneCorners.get(1,0)), new Scalar(0, 255, 0),4);
+        Imgproc.line(img, new Point(sceneCorners.get(1,0)), new Point(sceneCorners.get(2,0)), new Scalar(0, 255, 0),4);
+        Imgproc.line(img, new Point(sceneCorners.get(2,0)), new Point(sceneCorners.get(3,0)), new Scalar(0, 255, 0),4);
+        Imgproc.line(img, new Point(sceneCorners.get(3,0)), new Point(sceneCorners.get(0,0)), new Scalar(0, 255, 0),4);
 
         System.out.println("writing to file");
-        Imgcodecs.imwrite("searchingResult.png", imgMatches);
+        Imgcodecs.imwrite("searchingResult.png", img);
+        Imgcodecs.imwrite("searchingResultPoints.png", imgMatches);
     }
 
 
