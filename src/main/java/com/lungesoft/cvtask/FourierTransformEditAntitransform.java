@@ -17,23 +17,23 @@ public class FourierTransformEditAntitransform {
 
         Mat dft = task.doDFT(image);
 
-        task.deleteWhiteSpots(dft,
-                new Spot(100, 300, 200),
-                new Spot(100, 1300, 200),
-                new Spot(100, 290, 1000),
-                new Spot(100, 1300, 1000),
-
-                new Spot(50, 1050, 400),
-                new Spot(50, 1075, 800),
-                new Spot(50, 550, 800),
-                new Spot(50, 550, 400),
-
-                new Spot(50, 1600, 800),
-                new Spot(50, 1600, 400),
-                new Spot(50, 0, 800),
-                new Spot(50, 0, 400),
-                new Spot(50, 550, 50),
-                new Spot(50, 1050, 50));
+//        task.deleteWhiteSpots(dft,
+//                new Spot(100, 300, 200),
+//                new Spot(100, 1300, 200),
+//                new Spot(100, 290, 1000),
+//                new Spot(100, 1300, 1000),
+//
+//                new Spot(50, 1050, 400),
+//                new Spot(50, 1075, 800),
+//                new Spot(50, 550, 800),
+//                new Spot(50, 550, 400),
+//
+//                new Spot(50, 1600, 800),
+//                new Spot(50, 1600, 400),
+//                new Spot(50, 0, 800),
+//                new Spot(50, 0, 400),
+//                new Spot(50, 550, 50),
+//                new Spot(50, 1050, 50));
 
         Mat noramalize = task.doRGBNormalize(dft);
         Imgcodecs.imwrite("Output2.jpg", noramalize);
